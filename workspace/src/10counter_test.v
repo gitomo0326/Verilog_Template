@@ -13,9 +13,17 @@ initial begin
 end
 
 initial begin
-       $monitor("CLK=%d, RES=%d, Q=%d", CLK, RES, Q);
        $dumpfile("counter.vcd");
        $dumpvars(0, counter_test);
+end
+
+always @(posedge CLK or posedge RES) begin
+       if (RES) begin
+              i0.hoge <= 0;
+       end
+       else begin
+              i0.hoge <= 1;
+       end
 end
 
 endmodule
