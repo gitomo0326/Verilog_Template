@@ -1,6 +1,7 @@
 @echo off
 
-iverilog ../src/*.v
+iverilog ../src/*.v ./*.v
+
 vvp a.out
 gtkwave sim.vcd
 del a.out
