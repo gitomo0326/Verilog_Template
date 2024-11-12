@@ -5,3 +5,4 @@ iverilog ../src/*.v
 vvp a.out
 gtkwave %MODULE%.vcd
 del a.out
+del %MODULE%.vcd
