@@ -1,4 +1,4 @@
-module counter_test;
+module SIM_TOP;
 
 reg CLK, RES;
 wire [3:0] Q;
@@ -20,7 +20,7 @@ end
 
 initial begin
        $dumpfile("sim.vcd");
-       $dumpvars(0, counter_test);
+       $dumpvars(0, SIM_TOP);
 end
 
 always @(posedge CLK or posedge RES) begin
