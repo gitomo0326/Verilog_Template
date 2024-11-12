@@ -1,2 +1,7 @@
 # Verilog_Template
-Hello World!!
+
+## Simulation Execution
+Execute below command in VSCode Terminal
+```
+./sim/sim.bat
+```
