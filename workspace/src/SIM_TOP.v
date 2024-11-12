@@ -1,29 +1,19 @@
 module SIM_TOP;
 
-reg RES;
-wire p_clk;
+wire p_clk, p_rst;
 wire [3:0] Q;
 
 CLK_GEN m_CLK_GEN(p_clk);
-
-counter10 i0(p_clk, RES, Q);
-
-
-initial begin
-       RES = 0; #23;
-       RES = 1; #1;
-       RES = 0;
-end
-
-
+RESET_GEN #(.RESET_TIMING('d23))m_RESET_GEN(p_rst);
+counter10 i0(p_clk, p_rst, Q);
 
 initial begin
        $dumpfile("sim.vcd");
        $dumpvars(0, SIM_TOP);
 end
 
-always @(posedge p_clk or posedge RES) begin
-       if (RES) begin
+always @(posedge p_clk or posedge p_rst) begin
+       if (p_rst) begin
               i0.hoge <= 0;
        end
        else begin
