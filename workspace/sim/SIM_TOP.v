@@ -7,10 +7,7 @@ CLK_GEN m_CLK_GEN(p_clk);
 RESET_GEN #(.RESET_TIMING('d23))m_RESET_GEN(p_rst);
 counter10 i0(p_clk, p_rst, Q);
 
-initial begin
-       $dumpfile("sim.vcd");
-       $dumpvars(0, SIM_TOP);
-end
+SIM_DUMP m_SIM_DUMP();
 
 always @(posedge p_clk or posedge p_rst) begin
        if (p_rst) begin
