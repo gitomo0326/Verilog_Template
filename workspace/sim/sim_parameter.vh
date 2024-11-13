@@ -1,0 +1,1 @@
+`define CLK_CYCLE 1
