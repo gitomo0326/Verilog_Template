@@ -9,13 +9,4 @@ counter10 i0(p_clk, p_rst, Q);
 
 SIM_DUMP m_SIM_DUMP();
 
-always @(posedge p_clk or posedge p_rst) begin
-       if (p_rst) begin
-              i0.hoge <= 0;
-       end
-       else begin
-              i0.hoge <= 1;
-       end
-end
-
 endmodule
