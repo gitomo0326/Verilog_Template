@@ -4,7 +4,7 @@ wire p_clk, p_rst;
 wire [3:0] Q;
 
 CLK_GEN m_CLK_GEN(p_clk);
-RESET_GEN #(.RESET_TIMING('d23))m_RESET_GEN(p_rst);
+RESET_GEN m_RESET_GEN(p_rst);
 counter10 i0(p_clk, p_rst, Q);
 
 SIM_DUMP m_SIM_DUMP();

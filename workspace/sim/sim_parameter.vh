@@ -1,1 +1,2 @@
+`define RESET_TIMING 23
 `define CLK_CYCLE 1
