@@ -1,6 +1,7 @@
 `include "sim_parameter.vh"
 
-module CLK_GEN (
+module CLK_GEN 
+(
     output oP_CLK
 );
 
