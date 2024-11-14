@@ -9,7 +9,7 @@ reg p_clk;
 
 always begin
      p_clk = ~p_clk;
-     #(`CLK_CYCLE/2);
+     #(((1/`CLK_CYCLE) / 2.0)*1000);
 end
 
 initial begin
