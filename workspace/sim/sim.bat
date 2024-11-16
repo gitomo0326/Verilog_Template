@@ -1,6 +1,6 @@
 @echo off
 
-iverilog ../src/*.v ./*.v
+iverilog ../src/*.v ./test_bench/*.v
 
 vvp a.out
 gtkwave sim.vcd

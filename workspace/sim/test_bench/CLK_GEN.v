@@ -1,4 +1,4 @@
-`include "sim_parameter.vh"
+`include "./test_bench/sim_parameter.vh"
 
 module CLK_GEN 
 (
