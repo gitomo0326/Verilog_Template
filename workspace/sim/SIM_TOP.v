@@ -9,4 +9,10 @@ counter10 i0(p_clk, p_rst, Q);
 
 SIM_DUMP m_SIM_DUMP();
 
+// Timeout Processing of Simulation
+initial begin
+    #`TIME_OUT;
+    $finish;
+end
+
 endmodule
