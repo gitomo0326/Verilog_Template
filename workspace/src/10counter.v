@@ -1,21 +1,21 @@
-module counter10(CLK, RES, Q);
+module counter10
+(
+    input CLK,
+    input RES,
+    output [3:0] Q 
+);
 
-input CLK, RES;
-output [3:0]Q;
+reg [3: 0] q;
 
-reg  hoge;
-wire flag;
-
-reg [3:0]Q;
-
-always @(posedge CLK or negedge RES) 
-   if(RES ==1'b0)
-       Q = 4'd0;
+always @(posedge CLK or negedge RES) begin
+   if(RES ==1'b1)
+       q <= 4'd0;
    else if(Q == 4'd9)
-       Q = 4'd0;
+       q <= 4'd0;
    else
-       Q = Q + 4'd1;
+       q <= Q + 4'd1;
+end
 
-assign flag = (hoge == 1) ? 1'b1 : 1'b0;
+assign Q = q;
 
 endmodule
