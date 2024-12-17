@@ -14,7 +14,7 @@ initial begin
     
     p_rst = 1;
     
-    #1;
+    repeat(1) @(posedge P_CLK);
     
     p_rst = 0;
 end
