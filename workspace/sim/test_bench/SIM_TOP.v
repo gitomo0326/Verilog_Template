@@ -20,6 +20,7 @@ CLK_GEN m_CLK_GEN(
 
 // Reset Generator
 RESET_GEN m_RESET_GEN(
+    .P_CLK (p_clk),
     .oP_RST(p_rst)
 );
 
