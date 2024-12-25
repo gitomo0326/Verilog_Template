@@ -44,6 +44,7 @@ module SYNC_GEN
         end
     end
 
+    // V Sync Generator
     always @(posedge hs or posedge P_RST) begin
         if(P_RST) begin
             vs <= 1'b0;
