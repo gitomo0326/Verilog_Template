@@ -90,7 +90,6 @@ module SYNC_GEN
             repeat(`V_DISP) @(posedge hs);
             vde <= 1'b0;
             repeat(`V_TOTAL-(`V_SYNC_WIDHT+`V_BACK_PORCH+`V_DISP)-1) @(posedge hs);
-
         end
         else begin
             vde <= vde;
