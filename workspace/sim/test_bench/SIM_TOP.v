@@ -24,6 +24,16 @@ RESET_GEN m_RESET_GEN(
     .oP_RST(p_rst)
 );
 
+// Sync Generator
+SYNC_GEN m_SYNC_GEN(
+    .P_CLK   (p_clk),
+    .P_RST   (p_rst),
+    .oVS     (vs   ),
+    .oHS     (hs   ),
+    .oDE     (de   )
+);
+
+
 // Main Module Instantiation
 counter10 i0(
     .P_CLK(p_clk),
