@@ -1,3 +1,5 @@
+`include "sim_parameter.vh"
+
 module SIM_TOP;
 
 wire p_clk, p_rst;

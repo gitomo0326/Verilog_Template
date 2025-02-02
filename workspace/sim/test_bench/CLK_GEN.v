@@ -1,5 +1,3 @@
-`include "./test_bench/sim_parameter.vh"
-
 module CLK_GEN 
 (
     output oP_CLK
