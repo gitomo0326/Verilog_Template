@@ -1,6 +1,6 @@
 @echo off
 
-iverilog -I ./test_bench -g2005-sv -s SIM_TOP ../src/10counter.v ./test_bench/SIM_TOP.v ./test_bench/SIM_DUMP.v ./test_bench/CLK_GEN.v ./test_bench/RESET_GEN.v ./test_bench/SYNC_GEN.v
+iverilog -I ./test_bench -g2005-sv -s SIM_TOP -c ./test_bench_rtl_file_list.cmd -c ../src/rtl/10counter_rtl_file_list.cmd 
 vvp a.out
 gtkwave sim.vcd
 del a.out
