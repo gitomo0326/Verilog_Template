@@ -6,10 +6,10 @@
 `define PARALLEL 4 // Pixel Per Clock
 
 // H Sync Parameter
-`define H_TOTAL      36 / `PARALLEL
+`define H_TOTAL      56 / `PARALLEL
 `define H_BACK_PORCH 4  / `PARALLEL
 `define H_SYNC_WIDHT 12 / `PARALLEL
-`define H_DISP       16 / `PARALLEL
+`define H_DISP       36 / `PARALLEL
 
 // V Sync Parameter
 `define V_TOTAL      23
@@ -19,3 +19,6 @@
 
 // Frame Counter
 `define FRAME_NUM    2
+
+// Input File
+`define INPUT_FILE1 "./in_data/sample.dat"
