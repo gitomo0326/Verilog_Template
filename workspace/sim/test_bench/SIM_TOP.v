@@ -15,6 +15,7 @@ wire hs;
 wire de;
 wire [3:0] q;
 
+// Simulation Dump
 SIM_DUMP m_SIM_DUMP();
 
 // Timeout Processing of Simulation
@@ -36,11 +37,11 @@ RESET_GEN m_RESET_GEN(
 
 // Sync Generator
 SYNC_GEN m_SYNC_GEN(
-    .P_CLK   (p_clk),
-    .P_RST   (p_rst),
-    .oVS     (vs   ),
-    .oHS     (hs   ),
-    .oDE     (de   )
+    .P_CLK   (p_clk  ),
+    .P_RST   (p_rst  ),
+    .oVS     (vs     ),
+    .oHS     (hs     ),
+    .oDE     (de     )
 );
 
 // Load RGB Data
