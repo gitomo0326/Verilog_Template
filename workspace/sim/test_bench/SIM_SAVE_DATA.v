@@ -44,7 +44,7 @@ always @(posedge P_CLK or posedge P_RST) begin
             4: begin
                 $fdisplay(file, "%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h", color[0][0], color[0][1], color[0][2], color[1][0], color[1][1], color[1][2], color[2][0], color[2][1], color[2][2], color[3][0], color[3][1], color[3][2]);
             end
-            8: begin
+            8: begin // Equal to $fdisplay
                 $fwrite(file, "%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h",   color[0][0], color[0][1], color[0][2], color[1][0], color[1][1], color[1][2], color[2][0], color[2][1], color[2][2], color[3][0], color[3][1], color[3][2]);
                 $fwrite(file, "%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h_%h\n", color[4][0], color[4][1], color[4][2], color[5][0], color[5][1], color[5][2], color[6][0], color[6][1], color[6][2], color[7][0], color[7][1], color[7][2]);
             end
