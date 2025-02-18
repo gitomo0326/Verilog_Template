@@ -18,7 +18,10 @@
 `define V_DISP       10
 
 // Frame Counter
-`define FRAME_NUM    2
+`define FRAME_NUM    1
 
 // Input File
 `define INPUT_FILE1 "./in_data/sample.dat"
+
+// Output File
+`define OUTPUT_FILE1 "./in_data/sample_out.dat"

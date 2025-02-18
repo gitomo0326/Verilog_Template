@@ -20,7 +20,10 @@ initial begin
     sync_on <= 1;
 
     // Simulation Termination
-    wait(frame_num == `FRAME_NUM + 1) $finish;
+    wait(frame_num == `FRAME_NUM + 1) 
+    $fclose(SIM_TOP.m_SIM_SAVE_DATA.file);
+    $finish;
+
 end
 
 assign oSYNC_ON = sync_on;

@@ -13,7 +13,16 @@ wire p_rst;
 wire sim_sync_gen_vs;
 wire sim_sync_gen_hs;
 wire sim_sync_gen_de;
+
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_r;
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_g;
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_b;
+wire sim_load_data_vs;
+wire sim_load_data_hs;
+wire sim_load_data_de;
+
 wire sim_ctrl_sync_on;
+
 wire [3:0] q;
 
 // Simulation Dump
@@ -62,15 +71,28 @@ SIM_LOAD_DATA #(
 ) m_SIM_LOAD_DATA(
     .P_CLK   (p_clk  ),
     .P_RST   (p_rst  ),
-    .oR      (),
-    .oG      (),
-    .oB      (),
-    .oVS     (),
-    .oHS     (),
-    .oDE     ()
     .iVS     (sim_sync_gen_vs),
     .iHS     (sim_sync_gen_hs),
     .iDE     (sim_sync_gen_de),
+    .oR      (sim_load_data_r),
+    .oG      (sim_load_data_g),
+    .oB      (sim_load_data_b),
+    .oVS     (sim_load_data_vs),
+    .oHS     (sim_load_data_hs),
+    .oDE     (sim_load_data_de)
+);
+
+// Save RGB Data
+SIM_SAVE_DATA #(
+    .IN_DAT_WH (IN_DAT_WH)
+) m_SIM_SAVE_DATA(
+    .P_CLK   (p_clk  ),
+    .P_RST   (p_rst  ),
+    .iVS     (sim_load_data_vs),
+    .iDE     (sim_load_data_de),
+    .iR      (sim_load_data_r),
+    .iG      (sim_load_data_g),
+    .iB      (sim_load_data_b)
 );
 
 // Main Module Instantiation
