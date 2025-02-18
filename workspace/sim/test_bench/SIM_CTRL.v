@@ -11,16 +11,16 @@ module SIM_CTRL
 reg sync_on;
 
 initial begin
-        sync_on <= 0;
+    sync_on <= 0;
 
-        @(posedge P_RST);
+    @(posedge P_RST);
 
-        repeat(3) @(posedge P_CLK);
+    repeat(3) @(posedge P_CLK);
 
-        sync_on <= 1;
+    sync_on <= 1;
 
-        // Simulation Termination
-        wait(frame_num == `FRAME_NUM + 1) $finish;
+    // Simulation Termination
+    wait(frame_num == `FRAME_NUM + 1) $finish;
 end
 
 assign oSYNC_ON = sync_on;
