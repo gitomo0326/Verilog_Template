@@ -84,7 +84,7 @@ SIM_LOAD_DATA #(
 
 // Save RGB Data
 SIM_SAVE_DATA #(
-    .IN_DAT_WH (IN_DAT_WH)
+    .IN_DAT_WH (OUT_DAT_WH)
 ) m_SIM_SAVE_DATA(
     .P_CLK   (p_clk  ),
     .P_RST   (p_rst  ),
