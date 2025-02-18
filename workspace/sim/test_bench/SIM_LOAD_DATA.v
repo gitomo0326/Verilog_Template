@@ -27,7 +27,7 @@ reg  [$clog2(`H_DISP * `V_DISP + 1) - 1: 0] de_count;
 
 // Load RGB Data
 initial begin
-    $readmemh(`INPUT_FILE1, memh);
+    $readmemh(`INPUT_FILE_0, memh);
 end
 
 // DE Counter

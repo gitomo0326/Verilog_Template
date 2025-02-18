@@ -15,7 +15,7 @@ integer i;
 integer file;
 
 initial begin
-    file = $fopen(`OUTPUT_FILE1, "w");
+    file = $fopen(`OUTPUT_FILE_0, "w");
 end
 
 

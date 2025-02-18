@@ -21,7 +21,7 @@
 `define FRAME_NUM    1
 
 // Input File
-`define INPUT_FILE1 "./in_data/sample.dat"
+`define INPUT_FILE_0  "./in_data/sample_0.dat"
 
 // Output File
-`define OUTPUT_FILE1 "./in_data/sample_out.dat"
+`define OUTPUT_FILE_0 "./in_data/sample_out_0.dat"
