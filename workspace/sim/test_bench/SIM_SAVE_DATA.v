@@ -11,12 +11,6 @@ module SIM_SAVE_DATA #(
     input [`PARALLEL - 1: 0][IN_DAT_WH - 1: 0] iB
 );
 
-localparam int unsigned FRAME_WH = $clog2(`FRAME_NUM + 1) + 1;
-
-reg  [FRAME_WH - 1: 0] frame_num;
-reg                    vs_1d;
-wire                   vs_1fp;
-
 integer i;
 integer file;
 
