@@ -2,6 +2,7 @@ module SYNC_GEN
 (
     input  P_CLK,
     input  P_RST,
+    input  iSYNC_ON,
     output oVS,
     output oHS,
     output oDE
@@ -13,29 +14,12 @@ module SYNC_GEN
     reg hde;
     reg vde;
 
-    // Sync Start Flag
-    reg sync_on;
-
-    initial begin
-        // vs <= 0;
-        // hs <= 0;
-        // sync_on <= 0;
-
-        @(posedge P_RST);
-
-        repeat(3) @(posedge P_CLK);
-
-        sync_on <= 1;
-
-        wait(frame_num == `FRAME_NUM + 1) $finish;
-    end
-
     // H Sync Generator
     always @(posedge P_CLK or posedge P_RST) begin
         if(P_RST) begin
             hs <= 1'b0;
         end
-        else if(sync_on) begin
+        else if(iSYNC_ON) begin
             hs <= 1'b1;
             repeat(`H_SYNC_WIDHT) @(posedge P_CLK);
             hs <= 1'b0;
@@ -51,7 +35,7 @@ module SYNC_GEN
         if(P_RST) begin
             vs <= 1'b0;
         end
-        else if(sync_on) begin
+        else if(iSYNC_ON) begin
             vs <= 1'b1;
             repeat(`V_SYNC_WIDHT) @(posedge hs);
             vs <= 1'b0;
@@ -67,7 +51,7 @@ module SYNC_GEN
         if(P_RST) begin
             hde <= 1'b0;
         end
-        else if(sync_on) begin
+        else if(iSYNC_ON) begin
             hde <= 1'b0;
             repeat(`H_SYNC_WIDHT+`H_BACK_PORCH) @(posedge P_CLK);
             hde <= 1'b1;
@@ -85,7 +69,7 @@ module SYNC_GEN
         if(P_RST) begin
             vde <= 1'b0;
         end
-        else if(sync_on) begin
+        else if(iSYNC_ON) begin
             vde <= 1'b0;
             repeat(`V_SYNC_WIDHT+`V_BACK_PORCH) @(posedge hs);
             vde <= 1'b1;
@@ -102,34 +86,5 @@ module SYNC_GEN
     assign oVS = vs;
     assign oHS = hs;
     assign oDE = hde & vde;
-
-
-    reg [5 : 0] frame_num;
-    reg  vs_1d;
-    wire vs_1fp;
-
-    always @(posedge P_CLK or posedge P_RST) begin
-        if(P_RST) begin
-            vs_1d <= 1'b0;
-        end
-        else begin
-            vs_1d <= vs;
-        end
-    end
-
-    assign vs_1fp = vs & ~vs_1d;
-
-    always @(posedge P_CLK or posedge P_RST) begin
-        if(P_RST) begin
-            frame_num <= 6'b0;
-        end
-        else if(vs_1fp) begin
-            frame_num <= frame_num + $bits(frame_num)'(1'b1);
-        end
-        else begin
-            frame_num <= frame_num;
-        end
-    end
-
 
 endmodule

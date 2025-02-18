@@ -10,9 +10,10 @@ module SIM_TOP #(
 
 wire p_clk;
 wire p_rst;
-wire vs;
-wire hs;
-wire de;
+wire sim_sync_gen_vs;
+wire sim_sync_gen_hs;
+wire sim_sync_gen_de;
+wire sim_ctrl_sync_on;
 wire [3:0] q;
 
 // Simulation Dump
@@ -23,6 +24,15 @@ initial begin
     #`TIME_OUT;
     $finish;
 end
+
+SIM_CTRL m_SIM_CTRL(
+    .P_CLK(p_clk),
+    .P_RST(p_rst),
+    .iVS(sim_sync_gen_vs),
+    .iHS('0),
+    .iDE('0),
+    .oSYNC_ON(sim_ctrl_sync_on)
+);
 
 // Clock Generator
 CLK_GEN m_CLK_GEN(
@@ -39,9 +49,10 @@ RESET_GEN m_RESET_GEN(
 SYNC_GEN m_SYNC_GEN(
     .P_CLK   (p_clk  ),
     .P_RST   (p_rst  ),
-    .oVS     (vs     ),
-    .oHS     (hs     ),
-    .oDE     (de     )
+    .iSYNC_ON(sim_ctrl_sync_on),
+    .oVS     (sim_sync_gen_vs     ),
+    .oHS     (sim_sync_gen_hs     ),
+    .oDE     (sim_sync_gen_de     )
 );
 
 // Load RGB Data
@@ -51,15 +62,15 @@ SIM_LOAD_DATA #(
 ) m_SIM_LOAD_DATA(
     .P_CLK   (p_clk  ),
     .P_RST   (p_rst  ),
-    .iVS     (vs     ),
-    .iHS     (hs     ),
-    .iDE     (de     ),
     .oR      (),
     .oG      (),
     .oB      (),
     .oVS     (),
     .oHS     (),
     .oDE     ()
+    .iVS     (sim_sync_gen_vs),
+    .iHS     (sim_sync_gen_hs),
+    .iDE     (sim_sync_gen_de),
 );
 
 // Main Module Instantiation
