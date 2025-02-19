@@ -6,9 +6,9 @@ module SIM_SAVE_DATA #(
     input P_RST,
     input iVS,
     input iDE,
-    input [`PARALLEL - 1: 0][IN_DAT_WH - 1: 0] iR,
-    input [`PARALLEL - 1: 0][IN_DAT_WH - 1: 0] iG,
-    input [`PARALLEL - 1: 0][IN_DAT_WH - 1: 0] iB
+    input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iR,
+    input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iG,
+    input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iB
 );
 
 localparam int unsigned COLOR_NUM = 3;

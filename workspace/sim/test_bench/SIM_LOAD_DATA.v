@@ -17,7 +17,6 @@ module SIM_LOAD_DATA #(
 );
 
 localparam int unsigned COLOR_NUM = 3;
-localparam int unsigned DE_COUNT_SHIFT = $clog2(`PARALLEL);
 
 reg  [0: `PARALLEL - 1][0: COLOR_NUM - 1][IN_DAT_WH - 1: 0] color;
 reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh [0 : `H_DISP * `V_DISP - 1];
@@ -51,7 +50,7 @@ always @(posedge P_CLK or posedge P_RST) begin
         color <= '0;
     end
     else if(iDE) begin
-        color <= memh[de_count >> DE_COUNT_SHIFT];
+        color <= memh[de_count];
     end
     else begin
         color <= color;
