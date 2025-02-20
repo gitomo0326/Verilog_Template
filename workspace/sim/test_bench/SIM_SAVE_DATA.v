@@ -1,5 +1,6 @@
 module SIM_SAVE_DATA #(
-    parameter IN_DAT_WH  = 'd8
+    parameter IN_DAT_WH  = 'd8,
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1
 )
 (
     input P_CLK,
@@ -8,17 +9,33 @@ module SIM_SAVE_DATA #(
     input iDE,
     input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iR,
     input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iG,
-    input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iB
+    input [0: `PARALLEL - 1][IN_DAT_WH - 1: 0] iB,
+    input                   [FRAME_WH - 1 : 0] iFRAME_NUM
 );
 
 localparam int unsigned COLOR_NUM = 3;
 
 integer file;
+integer file0;
+integer file1;
+integer file2;
+integer file3;
+integer file4;
+integer file5;
+integer file6;
+integer file7;
 
 wire [0: `PARALLEL - 1][0: COLOR_NUM - 1][IN_DAT_WH - 1: 0] color;
 
 initial begin
-    file = $fopen(`OUTPUT_FILE_0, "w");
+    file0 = $fopen(`OUTPUT_FILE_0, "w");
+    file1 = $fopen(`OUTPUT_FILE_1, "w");
+    file2 = $fopen(`OUTPUT_FILE_2, "w");
+    file3 = $fopen(`OUTPUT_FILE_3, "w");
+    file4 = $fopen(`OUTPUT_FILE_4, "w");
+    file5 = $fopen(`OUTPUT_FILE_5, "w");
+    file6 = $fopen(`OUTPUT_FILE_6, "w");
+    file7 = $fopen(`OUTPUT_FILE_7, "w");
 end
 
 generate
@@ -28,6 +45,38 @@ generate
         assign color[i][2] = iB[i];
     end
 endgenerate
+
+always @(*) begin
+    case (iFRAME_NUM)
+        1: begin
+            file = file0;
+        end
+        2: begin
+            file = file1;
+        end
+        3: begin
+            file = file2;
+        end
+        4: begin
+            file = file3;
+        end
+        5: begin
+            file = file4;
+        end
+        6: begin
+            file = file5;
+        end
+        7: begin
+            file = file6;
+        end
+        8: begin
+            file = file7;
+        end
+        default: begin
+            ;
+        end
+    endcase
+end
 
 always @(posedge P_CLK or posedge P_RST) begin
     if(P_RST) begin

@@ -18,10 +18,24 @@
 `define V_DISP       10
 
 // Frame Counter
-`define FRAME_NUM    1
+`define FRAME_NUM    8
 
 // Input File
 `define INPUT_FILE_0  "./in_data/sample_0.dat"
+`define INPUT_FILE_1  "./in_data/sample_1.dat"
+`define INPUT_FILE_2  "./in_data/sample_1.dat"
+`define INPUT_FILE_3  "./in_data/sample_1.dat"
+`define INPUT_FILE_4  "./in_data/sample_0.dat"
+`define INPUT_FILE_5  "./in_data/sample_1.dat"
+`define INPUT_FILE_6  "./in_data/sample_1.dat"
+`define INPUT_FILE_7  "./in_data/sample_1.dat"
 
 // Output File
 `define OUTPUT_FILE_0 "./in_data/sample_out_0.dat"
+`define OUTPUT_FILE_1 "./in_data/sample_out_1.dat"
+`define OUTPUT_FILE_2 "./in_data/sample_out_2.dat"
+`define OUTPUT_FILE_3 "./in_data/sample_out_3.dat"
+`define OUTPUT_FILE_4 "./in_data/sample_out_4.dat"
+`define OUTPUT_FILE_5 "./in_data/sample_out_5.dat"
+`define OUTPUT_FILE_6 "./in_data/sample_out_6.dat"
+`define OUTPUT_FILE_7 "./in_data/sample_out_7.dat"

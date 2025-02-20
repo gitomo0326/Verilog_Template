@@ -1,6 +1,7 @@
 module SIM_LOAD_DATA #(
     parameter IN_DAT_WH  = 'd10,
-    parameter OUT_DAT_WH = 'd10
+    parameter OUT_DAT_WH = 'd10,
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1
 )
 (
     input                                              P_CLK,
@@ -8,6 +9,7 @@ module SIM_LOAD_DATA #(
     input                                              iVS,
     input                                              iHS,
     input                                              iDE,
+    input                        [FRAME_WH   - 1: 0]   iFRAME_NUM,
     output reg [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0]   oR,
     output reg [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0]   oG,
     output reg [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0]   oB,
@@ -19,14 +21,28 @@ module SIM_LOAD_DATA #(
 localparam int unsigned COLOR_NUM = 3;
 
 reg  [0: `PARALLEL - 1][0: COLOR_NUM - 1][IN_DAT_WH - 1: 0] color;
-reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh0 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh1 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh2 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh3 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh4 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh5 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh6 [0 : `H_DISP * `V_DISP - 1];
+reg  [0:             `PARALLEL * COLOR_NUM * IN_DAT_WH - 1] memh7 [0 : `H_DISP * `V_DISP - 1];
 
 
 reg  [$clog2(`H_DISP * `V_DISP + 1) - 1: 0] de_count;
 
 // Load RGB Data
 initial begin
-    $readmemh(`INPUT_FILE_0, memh);
+    $readmemh(`INPUT_FILE_0, memh0);
+    $readmemh(`INPUT_FILE_1, memh1);
+    $readmemh(`INPUT_FILE_2, memh2);
+    $readmemh(`INPUT_FILE_3, memh3);
+    $readmemh(`INPUT_FILE_4, memh4);
+    $readmemh(`INPUT_FILE_5, memh5);
+    $readmemh(`INPUT_FILE_6, memh6);
+    $readmemh(`INPUT_FILE_7, memh7);
 end
 
 // DE Counter
@@ -50,7 +66,35 @@ always @(posedge P_CLK or posedge P_RST) begin
         color <= '0;
     end
     else if(iDE) begin
-        color <= memh[de_count];
+        case (iFRAME_NUM)
+            1: begin
+                color <= memh0[de_count];
+            end
+            2: begin
+                color <= memh1[de_count];
+            end
+            3: begin
+                color <= memh2[de_count];
+            end
+            4: begin
+                color <= memh3[de_count];
+            end
+            5: begin
+                color <= memh4[de_count];
+            end
+            6: begin
+                color <= memh5[de_count];
+            end
+            7: begin
+                color <= memh6[de_count];
+            end
+            8: begin
+                color <= memh7[de_count];
+            end
+            default: begin
+                color <= '0;
+            end
+        endcase
     end
     else begin
         color <= color;

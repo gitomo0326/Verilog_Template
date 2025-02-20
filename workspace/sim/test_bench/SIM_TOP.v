@@ -2,7 +2,8 @@
 
 module SIM_TOP #(
     parameter IN_DAT_WH  = 'd8,
-    parameter OUT_DAT_WH = 'd8
+    parameter OUT_DAT_WH = 'd8,
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1 // Last +1 is for `FRAME_NUM = 1
 )
 (
 
@@ -22,6 +23,7 @@ wire sim_load_data_hs;
 wire sim_load_data_de;
 
 wire sim_ctrl_sync_on;
+wire [FRAME_WH - 1: 0] sim_ctrl_frame_num;
 
 wire [3:0] q;
 
@@ -34,13 +36,17 @@ initial begin
     $finish;
 end
 
-SIM_CTRL m_SIM_CTRL(
+SIM_CTRL #(
+    .FRAME_WH(FRAME_WH)
+)
+m_SIM_CTRL(
     .P_CLK(p_clk),
     .P_RST(p_rst),
     .iVS(sim_sync_gen_vs),
     .iHS('0),
     .iDE('0),
-    .oSYNC_ON(sim_ctrl_sync_on)
+    .oSYNC_ON(sim_ctrl_sync_on),
+    .oFRAME_NUM(sim_ctrl_frame_num)
 );
 
 // Clock Generator
@@ -66,33 +72,37 @@ SYNC_GEN m_SYNC_GEN(
 
 // Load RGB Data
 SIM_LOAD_DATA #(
-    .IN_DAT_WH (IN_DAT_WH),
-    .OUT_DAT_WH(OUT_DAT_WH)
+    .IN_DAT_WH (IN_DAT_WH ),
+    .OUT_DAT_WH(OUT_DAT_WH),
+    .FRAME_WH  (FRAME_WH  )
 ) m_SIM_LOAD_DATA(
-    .P_CLK   (p_clk  ),
-    .P_RST   (p_rst  ),
-    .iVS     (sim_sync_gen_vs),
-    .iHS     (sim_sync_gen_hs),
-    .iDE     (sim_sync_gen_de),
-    .oR      (sim_load_data_r),
-    .oG      (sim_load_data_g),
-    .oB      (sim_load_data_b),
-    .oVS     (sim_load_data_vs),
-    .oHS     (sim_load_data_hs),
-    .oDE     (sim_load_data_de)
+    .P_CLK     (p_clk             ),
+    .P_RST     (p_rst             ),
+    .iFRAME_NUM(sim_ctrl_frame_num),
+    .iVS       (sim_sync_gen_vs   ),
+    .iHS       (sim_sync_gen_hs   ),
+    .iDE       (sim_sync_gen_de   ),
+    .oR        (sim_load_data_r   ),
+    .oG        (sim_load_data_g   ),
+    .oB        (sim_load_data_b   ),
+    .oVS       (sim_load_data_vs  ),
+    .oHS       (sim_load_data_hs  ),
+    .oDE       (sim_load_data_de  )
 );
 
 // Save RGB Data
 SIM_SAVE_DATA #(
-    .IN_DAT_WH (OUT_DAT_WH)
+    .IN_DAT_WH (OUT_DAT_WH),
+    .FRAME_WH  (FRAME_WH  )
 ) m_SIM_SAVE_DATA(
-    .P_CLK   (p_clk  ),
-    .P_RST   (p_rst  ),
-    .iVS     (sim_load_data_vs),
-    .iDE     (sim_load_data_de),
-    .iR      (sim_load_data_r),
-    .iG      (sim_load_data_g),
-    .iB      (sim_load_data_b)
+    .P_CLK     (p_clk             ),
+    .P_RST     (p_rst             ),
+    .iVS       (sim_load_data_vs  ),
+    .iDE       (sim_load_data_de  ),
+    .iR        (sim_load_data_r   ),
+    .iG        (sim_load_data_g   ),
+    .iB        (sim_load_data_b   ),
+    .iFRAME_NUM(sim_ctrl_frame_num)
 );
 
 // Main Module Instantiation
