@@ -1,7 +1,7 @@
 module SIM_LOAD_DATA #(
     parameter IN_DAT_WH  = 'd10,
     parameter OUT_DAT_WH = 'd10,
-    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1)
 )
 (
     input                                              P_CLK,
@@ -67,28 +67,28 @@ always @(posedge P_CLK or posedge P_RST) begin
     end
     else if(iDE) begin
         case (iFRAME_NUM)
-            1: begin
+            0: begin
                 color <= memh0[de_count];
             end
-            2: begin
+            1: begin
                 color <= memh1[de_count];
             end
-            3: begin
+            2: begin
                 color <= memh2[de_count];
             end
-            4: begin
+            3: begin
                 color <= memh3[de_count];
             end
-            5: begin
+            4: begin
                 color <= memh4[de_count];
             end
-            6: begin
+            5: begin
                 color <= memh5[de_count];
             end
-            7: begin
+            6: begin
                 color <= memh6[de_count];
             end
-            8: begin
+            7: begin
                 color <= memh7[de_count];
             end
             default: begin

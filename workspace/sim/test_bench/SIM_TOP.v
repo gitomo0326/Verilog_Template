@@ -3,7 +3,7 @@
 module SIM_TOP #(
     parameter IN_DAT_WH  = 'd8,
     parameter OUT_DAT_WH = 'd8,
-    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1 // Last +1 is for `FRAME_NUM = 1
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1)
 )
 (
 

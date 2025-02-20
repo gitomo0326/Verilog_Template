@@ -1,6 +1,6 @@
 module SIM_SAVE_DATA #(
     parameter IN_DAT_WH  = 'd8,
-    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1) + 1
+    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1)
 )
 (
     input P_CLK,
@@ -48,28 +48,28 @@ endgenerate
 
 always @(*) begin
     case (iFRAME_NUM)
-        1: begin
+        0: begin
             file = file0;
         end
-        2: begin
+        1: begin
             file = file1;
         end
-        3: begin
+        2: begin
             file = file2;
         end
-        4: begin
+        3: begin
             file = file3;
         end
-        5: begin
+        4: begin
             file = file4;
         end
-        6: begin
+        5: begin
             file = file5;
         end
-        7: begin
+        6: begin
             file = file6;
         end
-        8: begin
+        7: begin
             file = file7;
         end
         default: begin
