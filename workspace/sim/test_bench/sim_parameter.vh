@@ -18,7 +18,7 @@
 `define V_DISP       10
 
 // Frame Counter
-`define FRAME_NUM    8
+`define FRAME_NUM    8 // Max 8 Frames
 
 // Input File
 `define INPUT_FILE_0  "./in_data/sample_0.dat"
