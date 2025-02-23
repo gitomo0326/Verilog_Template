@@ -13,6 +13,12 @@ module SIM_CTRL #(
 
 reg sync_on;
 
+// Timeout Processing of Simulation
+initial begin
+    #`TIME_OUT;
+    $finish;
+end
+
 initial begin
     sync_on <= 0;
 

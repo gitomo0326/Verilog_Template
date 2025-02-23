@@ -39,12 +39,6 @@ wire [3:0] q;
 // Simulation Dump
 SIM_DUMP m_SIM_DUMP();
 
-// Timeout Processing of Simulation
-initial begin
-    #`TIME_OUT;
-    $finish;
-end
-
 SIM_CTRL #(
     .FRAME_WH(FRAME_WH)
 )
