@@ -10,7 +10,9 @@ module SIM_TOP #(
 );
 
 wire p_clk;
+wire sys_clk;
 wire p_rst;
+wire sys_rst;
 wire sim_sync_gen_vs;
 wire sim_sync_gen_hs;
 wire sim_sync_gen_de;
@@ -51,13 +53,16 @@ m_SIM_CTRL(
 
 // Clock Generator
 CLK_GEN m_CLK_GEN(
-    .oP_CLK(p_clk)
+    .oP_CLK  (p_clk  ),
+    .oSYS_CLK(sys_clk)
 );
 
 // Reset Generator
 RESET_GEN m_RESET_GEN(
-    .P_CLK (p_clk),
-    .oP_RST(p_rst)
+    .P_CLK   (p_clk  ),
+    .SYS_CLK (sys_clk),
+    .oP_RST  (p_rst  ),
+    .oSYS_RST(sys_rst)
 );
 
 // Sync Generator
