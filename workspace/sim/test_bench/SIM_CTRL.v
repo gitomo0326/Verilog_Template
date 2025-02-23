@@ -71,19 +71,20 @@ end
 assign oSYNC_ON = sync_on;
 
 reg [FRAME_WH -1: 0] frame_num;
-reg  vs_1d;
+wire vs_1d;
 wire vs_1fp;
 
 reg  is_frame_num_latch;
 
-always @(posedge P_CLK or posedge P_RST) begin
-    if(P_RST) begin
-        vs_1d <= 1'b0;
-    end
-    else begin
-        vs_1d <= iVS;
-    end
-end
+CYCLE_DELAY #(
+    .CYCLE_DELAY('d1),
+    .DATA_WIDTH ('d1)
+) m_CYCLE_DELAY_VSYNC (
+    .CLK   (P_CLK),
+    .RST   (P_RST),
+    .iDATA (iVS),
+    .oDATA (vs_1d)
+);
 
 assign vs_1fp = iVS & ~vs_1d;
 

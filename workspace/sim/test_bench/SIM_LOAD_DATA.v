@@ -131,17 +131,14 @@ always @(*) begin
     endcase
 end
 
-always @(posedge P_CLK or posedge P_RST) begin
-    if(P_RST) begin
-        oHS <= '0;
-        oVS <= '0;
-        oDE <= '0;
-    end
-    else begin
-        oHS <= iHS;
-        oVS <= iVS;
-        oDE <= iDE;
-    end
-end
+CYCLE_DELAY #(
+    .CYCLE_DELAY('d1),
+    .DATA_WIDTH ('d3)
+) m_CYCLE_DELAY_OUTPUT_SYNC (
+    .CLK    (P_CLK),
+    .RST    (P_RST),
+    .iDATA  ({iVS, iHS, iDE}),
+    .oDATA  ({oVS, oHS, oDE})
+);
 
 endmodule
