@@ -9,14 +9,20 @@ module SIM_TOP #(
 
 );
 
+// CLK_GEN
 wire p_clk;
 wire sys_clk;
+
+// RESET_GEN
 wire p_rst;
 wire sys_rst;
+
+// SIM_SYNC_GEN
 wire sim_sync_gen_vs;
 wire sim_sync_gen_hs;
 wire sim_sync_gen_de;
 
+// SIM_LOAD_DATA
 wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_r;
 wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_g;
 wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_b;
@@ -24,6 +30,7 @@ wire sim_load_data_vs;
 wire sim_load_data_hs;
 wire sim_load_data_de;
 
+// SIM_CTRL
 wire sim_ctrl_sync_on;
 wire [FRAME_WH - 1: 0] sim_ctrl_frame_num;
 
