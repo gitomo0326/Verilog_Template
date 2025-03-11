@@ -1,7 +1,8 @@
 `timescale 1ns / 100ps
 
 `define TIME_OUT      1000000  //ns
-`define RESET_TIMING  23
+`define P_RESET_TIMING    23
+`define SYS_RESET_TIMING  5
 `define P_CLK_CYCLE   135.0 //MHz
 `define SYS_CLK_CYCLE 48.0 //MHz
 `define PARALLEL      4 // Pixel Per Clock
