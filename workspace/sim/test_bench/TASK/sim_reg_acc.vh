@@ -87,7 +87,7 @@ task read_reg_data;
         $display("Read Addr : %h, Read Data : %h, Expected Data : %h\n", iADR, reg_read_data, iDATA);
     end
     else begin
-        $display("Write Addr : %h, Write Data : %h\n", iADR, iDATA);  
+        $display("Read Addr : %h, Read Data : %h\n", iADR, iDATA);  
     end
 
     @(posedge reg_clk);

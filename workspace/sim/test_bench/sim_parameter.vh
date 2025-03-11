@@ -45,3 +45,4 @@
 // Register File
 `define REG_FILE           "./test_bench/reg.txt"
 `define REG_GOLDEN_FILE    "./test_bench/reg_golden.txt"
+`define REG_NUM             8               // Setting Register Number

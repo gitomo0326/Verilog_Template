@@ -1,9 +1,17 @@
 `include "sim_parameter.vh"
 
 module SIM_TOP #(
-    parameter IN_DAT_WH  = 'd8,
-    parameter OUT_DAT_WH = 'd8,
-    parameter FRAME_WH   = $clog2(`FRAME_NUM + 1)
+    // Video Interface
+    parameter IN_DAT_WH   = 'd8,
+    parameter OUT_DAT_WH  = 'd8,
+
+    // Register Interface
+    parameter REG_ADDR_WH = 'd12,
+    parameter REG_DAT_WH  = 'd8,
+    parameter REG_NUM     = `REG_NUM,
+
+    // Frame Counter
+    parameter FRAME_WH    = $clog2(`FRAME_NUM + 1)
 )
 (
 
@@ -12,10 +20,12 @@ module SIM_TOP #(
 // CLK_GEN
 wire p_clk;
 wire sys_clk;
+wire reg_clk;
 
 // RESET_GEN
 wire p_rst;
 wire sys_rst;
+wire reg_rst;
 
 // SIM_SYNC_GEN
 wire sim_sync_gen_vs;
@@ -32,7 +42,14 @@ wire sim_load_data_de;
 
 // SIM_CTRL
 wire sim_ctrl_sync_on;
-wire [FRAME_WH - 1: 0] sim_ctrl_frame_num;
+wire [FRAME_WH     -1: 0] sim_ctrl_frame_num;
+wire [REG_NUM      -1: 0] sim_ctrl_reg_we;
+wire [REG_NUM      -1: 0] sim_ctrl_reg_re;
+wire [REG_ADDR_WH  -1: 0] sim_ctrl_reg_addr;
+wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_write_data;
+wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_read_data;
+
+
 
 wire [3:0] q;
 
@@ -40,16 +57,29 @@ wire [3:0] q;
 SIM_DUMP m_SIM_DUMP();
 
 SIM_CTRL #(
+    .REG_ADDR_WH(REG_ADDR_WH),
+    .REG_DAT_WH (REG_DAT_WH ),
+    .REG_NUM    (REG_NUM    ),
     .FRAME_WH(FRAME_WH)
 )
 m_SIM_CTRL(
+    // Video Interface
     .P_CLK(p_clk),
     .P_RST(p_rst),
     .iVS(sim_sync_gen_vs),
     .iHS('0),
     .iDE('0),
     .oSYNC_ON(sim_ctrl_sync_on),
-    .oFRAME_NUM(sim_ctrl_frame_num)
+    .oFRAME_NUM(sim_ctrl_frame_num),
+
+    // Register Interface
+    .REG_CLK       (reg_clk                ),
+    .REG_RST       (reg_rst                ),
+    .oREG_WE       (sim_ctrl_reg_we        ),
+    .oREG_RE       (sim_ctrl_reg_re        ),
+    .oREG_ADDR     (sim_ctrl_reg_addr      ),
+    .oREG_WDATA    (sim_ctrl_reg_write_data),
+    .iREG_RDATA    ((8)'('1))
 );
 
 // Clock Generator
@@ -58,6 +88,8 @@ CLK_GEN m_CLK_GEN(
     .oSYS_CLK(sys_clk)
 );
 
+assign reg_clk = sys_clk;
+
 // Reset Generator
 RESET_GEN m_RESET_GEN(
     .P_CLK   (p_clk  ),
@@ -65,6 +97,8 @@ RESET_GEN m_RESET_GEN(
     .oP_RST  (p_rst  ),
     .oSYS_RST(sys_rst)
 );
+
+assign reg_rst = sys_rst;
 
 // Sync Generator
 SYNC_GEN m_SYNC_GEN(

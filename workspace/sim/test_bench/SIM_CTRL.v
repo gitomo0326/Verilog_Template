@@ -1,6 +1,9 @@
 `include "./test_bench/TASK/sim_reg_acc_param.vh"
 
 module SIM_CTRL #(
+    parameter REG_ADDR_WH = 'd12,
+    parameter REG_DAT_WH  = 'd8,
+    parameter REG_NUM     = `REG_NUM,
     parameter FRAME_WH = $clog2(`FRAME_NUM + 1)
 )
 (
@@ -16,11 +19,11 @@ module SIM_CTRL #(
     // Register Interface
     input                       REG_CLK,
     input                       REG_RST,
-    output [`REG_OHE_WH  -1: 0] oREG_WE,
-    output [`REG_OHE_WH  -1: 0] oREG_RE,
-    output [`REG_ADDR_WH -1: 0] oREG_ADDR,
-    output [`REG_DAT_WH  -1: 0] oREG_WDATA,
-    input  [`REG_DAT_WH  -1: 0] iREG_RDATA
+    output [REG_NUM     -1: 0] oREG_WE,
+    output [REG_NUM     -1: 0] oREG_RE,
+    output [REG_ADDR_WH -1: 0] oREG_ADDR,
+    output [REG_DAT_WH  -1: 0] oREG_WDATA,
+    input  [REG_DAT_WH  -1: 0] iREG_RDATA
 );
 
 reg  sync_on;
@@ -139,23 +142,27 @@ assign oFRAME_NUM = frame_num;
 `include "./TASK/sim_reg_acc.vh"
 
 
-assign reg_clk    = REG_CLK;
-assign reg_rst    = REG_RST;
-assign oREG_WE    = reg_we;
-assign oREG_RE    = reg_re;
-assign oREG_ADDR  = reg_write_addr;
-assign oREG_WDATA = reg_write_data;
-assign reg_rdata  = iREG_RDATA;
+assign reg_clk       = REG_CLK;
+assign reg_rst       = REG_RST;
+assign oREG_WE       = reg_we        [0+: REG_NUM    ];
+assign oREG_RE       = reg_re        [0+: REG_NUM    ];
+assign oREG_ADDR     = reg_write_addr[0+: REG_ADDR_WH];
+assign oREG_WDATA    = reg_write_data[0+: REG_DAT_WH ];
+assign reg_read_data = iREG_RDATA    [0+: REG_DAT_WH ];
 
 initial begin
     reg_vs <= 0;
 
 
     // Register Write Access
+    $display("Register Write Start\n");
     write_reg_data_all(`REG_FILE);
+    $display("Register Write End\n");
 
     // Register Read Access
+    $display("Register Read Start\n");
     read_reg_data_all(`REG_GOLDEN_FILE);
+    $display("Register Read End\n");
 
     @(posedge reg_clk);
 
