@@ -142,6 +142,7 @@ assign oFRAME_NUM = frame_num;
 assign reg_clk    = REG_CLK;
 assign reg_rst    = REG_RST;
 assign oREG_WE    = reg_we;
+assign oREG_RE    = reg_re;
 assign oREG_ADDR  = reg_write_addr;
 assign oREG_WDATA = reg_write_data;
 assign reg_rdata  = iREG_RDATA;
