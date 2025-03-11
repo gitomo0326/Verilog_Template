@@ -76,11 +76,11 @@ task read_reg_data;
     input [`REG_ADDR_WH   - 1: 0] iADR;
     input [`REG_DAT_WH    - 1: 0] iDATA;
 
-    reg_re         = '0;
+    reg_re = '0;
 
     @(posedge reg_clk);
 
-    reg_re         = $bits(reg_re)'(1 << iADR);
+    reg_re = $bits(reg_re)'(1 << iADR);
 
     if(reg_read_data != iDATA) begin
         $display("Register Read Error!!\n");
@@ -92,6 +92,6 @@ task read_reg_data;
 
     @(posedge reg_clk);
 
-    reg_re         = '0;
+    reg_re = '0;
 
 endtask
