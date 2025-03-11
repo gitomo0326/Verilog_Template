@@ -17,8 +17,10 @@ module SIM_CTRL #(
     input                       REG_CLK,
     input                       REG_RST,
     output [`REG_OHE_WH  -1: 0] oREG_WE,
+    output [`REG_OHE_WH  -1: 0] oREG_RE,
     output [`REG_ADDR_WH -1: 0] oREG_ADDR,
-    output [`REG_DAT_WH  -1: 0] oREG_WDATA
+    output [`REG_DAT_WH  -1: 0] oREG_WDATA,
+    input  [`REG_DAT_WH  -1: 0] iREG_RDATA
 );
 
 reg  sync_on;
@@ -142,6 +144,7 @@ assign reg_rst    = REG_RST;
 assign oREG_WE    = reg_we;
 assign oREG_ADDR  = reg_write_addr;
 assign oREG_WDATA = reg_write_data;
+assign reg_rdata  = iREG_RDATA;
 
 initial begin
     reg_vs <= 0;
@@ -150,9 +153,11 @@ initial begin
     // Register Write Access
     write_reg_data_all(`REG_FILE);
 
+    // Register Read Access
+    read_reg_data_all(`REG_GOLDEN_FILE);
+
     @(posedge reg_clk);
 
-    // Register Read Access
 
 
     @(posedge vs_1fp);
