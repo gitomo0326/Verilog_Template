@@ -13,7 +13,7 @@ reg sys_rst;
 initial begin
     p_rst = 0;
    
-    repeat(`RESET_TIMING) @(posedge P_CLK);
+    repeat(`P_RESET_TIMING) @(posedge P_CLK);
     
     p_rst = 1;
     
@@ -29,7 +29,7 @@ assign oP_RST = p_rst;
 initial begin
     sys_rst = 0;
    
-    repeat(`RESET_TIMING) @(posedge SYS_CLK);
+    repeat(`SYS_RESET_TIMING) @(posedge SYS_CLK);
     
     sys_rst = 1;
     
