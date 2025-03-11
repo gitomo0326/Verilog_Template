@@ -41,3 +41,6 @@
 `define OUTPUT_FILE_5 "./in_data/sample_out_5.dat"
 `define OUTPUT_FILE_6 "./in_data/sample_out_6.dat"
 `define OUTPUT_FILE_7 "./in_data/sample_out_7.dat"
+
+// Register File
+`define REG_FILE     "./test_bench/reg.txt"

@@ -1,24 +1,44 @@
+`include "./test_bench/TASK/sim_reg_acc_param.vh"
+
 module SIM_CTRL #(
     parameter FRAME_WH = $clog2(`FRAME_NUM + 1)
 )
 (
-    input P_CLK,
-    input P_RST,
-    input iVS,
-    input iHS,
-    input iDE,
-    output oSYNC_ON,
-    output [FRAME_WH -1: 0] oFRAME_NUM
+    // Video Interface
+    input                       P_CLK,
+    input                       P_RST,
+    input                       iVS,
+    input                       iHS,
+    input                       iDE,
+    output                      oSYNC_ON,
+    output [FRAME_WH     -1: 0] oFRAME_NUM,
+
+    // Register Interface
+    input                       REG_CLK,
+    input                       REG_RST,
+    output [`REG_OHE_WH  -1: 0] oREG_WE,
+    output [`REG_ADDR_WH -1: 0] oREG_ADDR,
+    output [`REG_DAT_WH  -1: 0] oREG_WDATA
 );
 
-reg sync_on;
+reg  sync_on;
 
+
+integer i;
+wire    reg_clk;
+wire    reg_rst;
+
+// ############################################################
 // Timeout Processing of Simulation
+// ############################################################
 initial begin
     #`TIME_OUT;
     $finish;
 end
 
+// ############################################################
+// Frame Count Control Processing
+// ############################################################
 initial begin
     sync_on <= 0;
 
@@ -108,5 +128,37 @@ always @(posedge P_CLK or posedge P_RST) begin
 end
 
 assign oFRAME_NUM = frame_num;
+
+
+
+// ############################################################
+// Register/SRAM Access
+// ############################################################
+`include "./TASK/sim_reg_acc.vh"
+
+
+assign reg_clk    = REG_CLK;
+assign reg_rst    = REG_RST;
+assign oREG_WE    = reg_we;
+assign oREG_ADDR  = reg_write_addr;
+assign oREG_WDATA = reg_write_data;
+
+initial begin
+    reg_vs <= 0;
+
+
+    // Register Write Access
+    write_reg_data_all(`REG_FILE);
+
+    @(posedge reg_clk);
+
+    // Register Read Access
+
+
+    @(posedge vs_1fp);
+
+    reg_update();
+end
+
 
 endmodule
