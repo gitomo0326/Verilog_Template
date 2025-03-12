@@ -1,9 +1,9 @@
 reg                                           reg_vs;
 reg                   [`REG_OHE_WH    - 1: 0] reg_we;
 reg                   [`REG_OHE_WH    - 1: 0] reg_re;
-reg                   [`REG_ADDR_WH   - 1: 0] reg_write_addr;
-reg                   [`REG_DAT_WH    - 1: 0] reg_write_data;
-reg                   [`REG_DAT_WH    - 1: 0] reg_read_data;
+reg                   [`REG_ADDR_WH   - 1: 0] reg_addr;
+reg                   [`REG_DAT_WH    - 1: 0] reg_wdata;
+reg                   [`REG_DAT_WH    - 1: 0] reg_rdata;
 
 // Register Update Task
 task reg_update;         
@@ -36,23 +36,23 @@ task write_reg_data;
     input [`REG_ADDR_WH   - 1: 0] iADR;
     input [`REG_DAT_WH    - 1: 0] iDATA;
 
-    reg_we         = '0;
-    reg_write_addr = '0;
-    reg_write_data = '0;
+    reg_we   = '0;
+    reg_addr = '0;
+    reg_addr = '0;
 
     @(posedge reg_clk);
 
-    reg_we         = $bits(reg_we)'(1 << iADR);
-    reg_write_addr = iADR;
-    reg_write_data = iDATA;
+    reg_we   = $bits(reg_we)'(1 << iADR);
+    reg_addr = iADR;
+    reg_addr = iDATA;
 
     $display("Write Addr : %h, Write Data : %h\n", iADR, iDATA);  
 
     @(posedge reg_clk);
 
-    reg_we         = '0;
-    reg_write_addr = '0;
-    reg_write_data = '0;
+    reg_we   = '0;
+    reg_addr = '0;
+    reg_addr = '0;
 
 endtask
 
@@ -82,9 +82,9 @@ task read_reg_data;
 
     reg_re = $bits(reg_re)'(1 << iADR);
 
-    if(reg_read_data != iDATA) begin
+    if(reg_rdata != iDATA) begin
         $display("Register Read Error!!\n");
-        $display("Read Addr : %h, Read Data : %h, Expected Data : %h\n", iADR, reg_read_data, iDATA);
+        $display("Read Addr : %h, Read Data : %h, Expected Data : %h\n", iADR, reg_rdata, iDATA);
     end
     else begin
         $display("Read Addr : %h, Read Data : %h\n", iADR, iDATA);  

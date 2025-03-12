@@ -142,13 +142,13 @@ assign oFRAME_NUM = frame_num;
 `include "./TASK/sim_reg_acc.vh"
 
 
-assign reg_clk       = REG_CLK;
-assign reg_rst       = REG_RST;
-assign oREG_WE       = reg_we        [0+: REG_NUM    ];
-assign oREG_RE       = reg_re        [0+: REG_NUM    ];
-assign oREG_ADDR     = reg_write_addr[0+: REG_ADDR_WH];
-assign oREG_WDATA    = reg_write_data[0+: REG_DAT_WH ];
-assign reg_read_data = iREG_RDATA    [0+: REG_DAT_WH ];
+assign reg_clk    = REG_CLK;
+assign reg_rst    = REG_RST;
+assign oREG_WE    = reg_we     [0+: REG_NUM    ];
+assign oREG_RE    = reg_re     [0+: REG_NUM    ];
+assign oREG_ADDR  = reg_addr   [0+: REG_ADDR_WH];
+assign oREG_WDATA = reg_wdata  [0+: REG_DAT_WH ];
+assign reg_rdata  = iREG_RDATA [0+: REG_DAT_WH ];
 
 initial begin
     reg_vs <= 0;

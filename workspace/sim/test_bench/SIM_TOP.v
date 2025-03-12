@@ -46,8 +46,8 @@ wire [FRAME_WH     -1: 0] sim_ctrl_frame_num;
 wire [REG_NUM      -1: 0] sim_ctrl_reg_we;
 wire [REG_NUM      -1: 0] sim_ctrl_reg_re;
 wire [REG_ADDR_WH  -1: 0] sim_ctrl_reg_addr;
-wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_write_data;
-wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_read_data;
+wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_wdata;
+wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_rdata;
 
 
 
@@ -73,12 +73,12 @@ m_SIM_CTRL(
     .oFRAME_NUM(sim_ctrl_frame_num),
 
     // Register Interface
-    .REG_CLK       (reg_clk                ),
-    .REG_RST       (reg_rst                ),
-    .oREG_WE       (sim_ctrl_reg_we        ),
-    .oREG_RE       (sim_ctrl_reg_re        ),
-    .oREG_ADDR     (sim_ctrl_reg_addr      ),
-    .oREG_WDATA    (sim_ctrl_reg_write_data),
+    .REG_CLK       (reg_clk           ),
+    .REG_RST       (reg_rst           ),
+    .oREG_WE       (sim_ctrl_reg_we   ),
+    .oREG_RE       (sim_ctrl_reg_re   ),
+    .oREG_ADDR     (sim_ctrl_reg_addr ),
+    .oREG_WDATA    (sim_ctrl_reg_wdata),
     .iREG_RDATA    ((8)'('1))
 );
 
