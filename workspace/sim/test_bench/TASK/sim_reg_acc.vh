@@ -36,23 +36,23 @@ task write_reg_data;
     input [`REG_ADDR_WH   - 1: 0] iADR;
     input [`REG_DAT_WH    - 1: 0] iDATA;
 
-    reg_we   = '0;
-    reg_addr = '0;
-    reg_addr = '0;
+    reg_we    = '0;
+    reg_addr  = '0;
+    reg_wdata = '0;
 
     @(posedge reg_clk);
 
-    reg_we   = $bits(reg_we)'(1 << iADR);
-    reg_addr = iADR;
-    reg_addr = iDATA;
+    reg_we    = $bits(reg_we)'(1 << iADR);
+    reg_addr  = iADR;
+    reg_wdata = iDATA;
 
     $display("Write Addr : %h, Write Data : %h\n", iADR, iDATA);  
 
     @(posedge reg_clk);
 
-    reg_we   = '0;
-    reg_addr = '0;
-    reg_addr = '0;
+    reg_we    = '0;
+    reg_addr  = '0;
+    reg_wdata = '0;
 
 endtask
 
