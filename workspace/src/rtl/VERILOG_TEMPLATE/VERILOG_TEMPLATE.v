@@ -1,4 +1,4 @@
-module counter10
+module VERILOG_TEMPLATE
 (
     input P_CLK,
     input P_RST,

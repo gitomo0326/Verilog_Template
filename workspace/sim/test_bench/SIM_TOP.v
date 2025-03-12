@@ -146,7 +146,7 @@ SIM_SAVE_DATA #(
 );
 
 // Main Module Instantiation
-counter10 i0(
+VERILOG_TEMPLATE m_VERILOG_TEMPLATE(
     .P_CLK(p_clk),
     .P_RST(p_rst),
     .oQ(q)
