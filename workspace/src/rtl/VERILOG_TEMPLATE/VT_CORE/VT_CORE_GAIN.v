@@ -57,9 +57,9 @@ module VT_CORE_GAIN #(
         end
     end
 
-    assign oR = r_mul_gain[IN_DAT_WH+GAIN_WH-1:OUT_DAT_WH];
-    assign oG = g_mul_gain[IN_DAT_WH+GAIN_WH-1:OUT_DAT_WH];
-    assign oB = b_mul_gain[IN_DAT_WH+GAIN_WH-1:OUT_DAT_WH];
+    assign oR = r_mul_gain[OUT_DAT_WH -1: 0];
+    assign oG = g_mul_gain[OUT_DAT_WH -1: 0];
+    assign oB = b_mul_gain[OUT_DAT_WH -1: 0];
 
     always @(posedge P_CLK or posedge P_RST) begin
         if (P_RST) begin
