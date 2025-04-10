@@ -82,15 +82,15 @@ task read_reg_data;
 
     reg_re = $bits(reg_re)'(1 << iADR);
 
-    if(reg_rdata != iDATA) begin
+    @(posedge reg_clk);
+
+    if(|reg_re && (reg_rdata != iDATA)) begin
         $display("Register Read Error!!\n");
         $display("Read Addr : %h, Read Data : %h, Expected Data : %h\n", iADR, reg_rdata, iDATA);
     end
     else begin
-        $display("Read Addr : %h, Read Data : %h\n", iADR, iDATA);  
+        $display("Read Addr : %h, Read Data : %h\n", iADR, reg_rdata);  
     end
-
-    @(posedge reg_clk);
 
     reg_re = '0;
 
