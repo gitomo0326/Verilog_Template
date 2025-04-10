@@ -43,15 +43,21 @@ wire sim_load_data_de;
 // SIM_CTRL
 wire sim_ctrl_sync_on;
 wire [FRAME_WH     -1: 0] sim_ctrl_frame_num;
+wire                      sim_ctrl_reg_vs;
 wire [REG_NUM      -1: 0] sim_ctrl_reg_we;
 wire [REG_NUM      -1: 0] sim_ctrl_reg_re;
 wire [REG_ADDR_WH  -1: 0] sim_ctrl_reg_addr;
 wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_wdata;
 wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_rdata;
 
+// Module
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_r;
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_g;
+wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_b;
+wire module_data_vs;
+wire module_data_hs;
+wire module_data_de;
 
-
-wire [3:0] q;
 
 // Simulation Dump
 SIM_DUMP m_SIM_DUMP();
@@ -75,11 +81,12 @@ m_SIM_CTRL(
     // Register Interface
     .REG_CLK       (reg_clk           ),
     .REG_RST       (reg_rst           ),
+    .oREG_VS       (sim_ctrl_reg_vs   ),
     .oREG_WE       (sim_ctrl_reg_we   ),
     .oREG_RE       (sim_ctrl_reg_re   ),
     .oREG_ADDR     (sim_ctrl_reg_addr ),
     .oREG_WDATA    (sim_ctrl_reg_wdata),
-    .iREG_RDATA    ((8)'('1))
+    .iREG_RDATA    (sim_ctrl_reg_rdata)
 );
 
 // Clock Generator
@@ -137,19 +144,51 @@ SIM_SAVE_DATA #(
 ) m_SIM_SAVE_DATA(
     .P_CLK     (p_clk             ),
     .P_RST     (p_rst             ),
-    .iVS       (sim_load_data_vs  ),
-    .iDE       (sim_load_data_de  ),
-    .iR        (sim_load_data_r   ),
-    .iG        (sim_load_data_g   ),
-    .iB        (sim_load_data_b   ),
+    .iVS       (module_data_vs    ),
+    .iDE       (module_data_de    ),
+    .iR        (module_data_r     ),
+    .iG        (module_data_g     ),
+    .iB        (module_data_b     ),
     .iFRAME_NUM(sim_ctrl_frame_num)
 );
 
 // Main Module Instantiation
-VERILOG_TEMPLATE m_VERILOG_TEMPLATE(
-    .P_CLK(p_clk),
-    .P_RST(p_rst),
-    .oQ(q)
+VERILOG_TEMPLATE #(
+    // Video Interface
+    .IN_DAT_WH  (IN_DAT_WH  ),
+    .OUT_DAT_WH (OUT_DAT_WH ),
+    .PARALLEL   (`PARALLEL  ),
+
+    // Register Interface
+    .REG_ADDR_WH(REG_ADDR_WH),
+    .REG_DAT_WH (REG_DAT_WH ),
+    .REG_NUM    (REG_NUM    )
+) m_VERILOG_TEMPLATE(
+    // Video Interface
+    .P_CLK(p_clk           ),
+    .P_RST(p_rst           ),
+    .iR   (sim_load_data_r ),
+    .iG   (sim_load_data_g ),
+    .iB   (sim_load_data_b ),
+    .iVS  (sim_load_data_vs),
+    .iHS  (sim_load_data_hs),
+    .iDE  (sim_load_data_de),
+    .oR   (module_data_r   ),
+    .oG   (module_data_g   ),
+    .oB   (module_data_b   ),
+    .oVS  (module_data_vs  ),
+    .oHS  (module_data_hs  ),
+    .oDE  (module_data_de  ),
+
+    // Register Interface
+    .REG_CLK       (reg_clk           ),
+    .REG_RST       (reg_rst           ),
+    .iREG_VS       (sim_ctrl_reg_vs   ),
+    .iREG_WE       (sim_ctrl_reg_we   ),
+    .iREG_RE       (sim_ctrl_reg_re   ),
+    .iREG_ADDR     (sim_ctrl_reg_addr ),
+    .iREG_WDATA    (sim_ctrl_reg_wdata),
+    .oREG_RDATA    (sim_ctrl_reg_rdata)
 );
 
 endmodule

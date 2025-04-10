@@ -1,7 +1,7 @@
 `timescale 1ns / 100ps
 
 `define TIME_OUT      1000000  //ns
-`define P_RESET_TIMING    23
+`define P_RESET_TIMING    500
 `define SYS_RESET_TIMING  5
 `define P_CLK_CYCLE   135.0 //MHz
 `define SYS_CLK_CYCLE 48.0 //MHz
@@ -45,4 +45,4 @@
 // Register File
 `define REG_FILE           "./test_bench/reg.txt"
 `define REG_GOLDEN_FILE    "./test_bench/reg_golden.txt"
-`define REG_NUM             8               // Setting Register Number
+`define REG_NUM             7               // Setting Register Number
