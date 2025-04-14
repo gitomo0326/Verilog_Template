@@ -400,3 +400,4 @@ FodyWeavers.xsd
 ##############################################################################################
 # Repository Original Settings
 **/sim/**/*.dat
+**/sim/**/test_bench_temp/
