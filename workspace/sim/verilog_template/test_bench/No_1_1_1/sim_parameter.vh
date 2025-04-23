@@ -43,6 +43,6 @@
 `define OUTPUT_FILE_7 "./common/test_data/in_data/sample_out_7.dat"
 
 // Register File
-`define REG_FILE           "./test_bench/reg.txt"
-`define REG_GOLDEN_FILE    "./test_bench/reg_golden.txt"
+`define REG_FILE           "./test_bench_temp/reg.txt"
+`define REG_GOLDEN_FILE    "./test_bench_temp/reg_golden.txt"
 `define REG_NUM             7               // Setting Register Number
