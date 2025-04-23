@@ -3,6 +3,7 @@
 set TEST_BENCH_TEMP="./test_bench_temp"
 set LOCAL_TEST_BENCH="./test_bench"
 set COMMON_TEST_BENCH="../common/test_bench"
+set TEST_BENCH_NUMBER=%1
 
 if exist %TEST_BENCH_TEMP% (
     rmdir /s /q %TEST_BENCH_TEMP%
@@ -11,7 +12,7 @@ if exist %TEST_BENCH_TEMP% (
 mkdir %TEST_BENCH_TEMP%
 
 xcopy /e %COMMON_TEST_BENCH% %TEST_BENCH_TEMP%
-xcopy /e %LOCAL_TEST_BENCH%  %TEST_BENCH_TEMP%
+xcopy /e %LOCAL_TEST_BENCH%\%TEST_BENCH_NUMBER%  %TEST_BENCH_TEMP%
 
 iverilog -I %TEST_BENCH_TEMP% ^
     -g2012 ^
