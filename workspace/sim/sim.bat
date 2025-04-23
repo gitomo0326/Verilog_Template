@@ -17,6 +17,7 @@ iverilog -I %TEST_BENCH_TEMP% ^
     -g2012 ^
     -s SIM_TOP ^
     -c %TEST_BENCH_TEMP%/test_bench_rtl_file_list.cmd ^
+    -c %TEST_BENCH_TEMP%/common_test_bench_rtl_file_list.cmd ^
     -c ../src/rtl/rtl_lib_rtl_file_list.cmd ^
     -c ../src/rtl/verilog_template_rtl_file_list.cmd
 vvp a.out
