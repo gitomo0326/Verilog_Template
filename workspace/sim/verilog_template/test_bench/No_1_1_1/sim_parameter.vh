@@ -21,28 +21,3 @@
 
 // Frame Counter
 `define FRAME_NUM    8 // Max 8 Frames
-
-// Input File
-`define INPUT_FILE_0  "../common/test_data/in_data/sample_0.dat"
-`define INPUT_FILE_1  "../common/test_data/in_data/sample_1.dat"
-`define INPUT_FILE_2  "../common/test_data/in_data/sample_1.dat"
-`define INPUT_FILE_3  "../common/test_data/in_data/sample_1.dat"
-`define INPUT_FILE_4  "../common/test_data/in_data/sample_0.dat"
-`define INPUT_FILE_5  "../common/test_data/in_data/sample_1.dat"
-`define INPUT_FILE_6  "../common/test_data/in_data/sample_1.dat"
-`define INPUT_FILE_7  "../common/test_data/in_data/sample_1.dat"
-
-// Output File
-`define OUTPUT_FILE_0 "../common/test_data/in_data/sample_out_0.dat"
-`define OUTPUT_FILE_1 "../common/test_data/in_data/sample_out_1.dat"
-`define OUTPUT_FILE_2 "../common/test_data/in_data/sample_out_2.dat"
-`define OUTPUT_FILE_3 "../common/test_data/in_data/sample_out_3.dat"
-`define OUTPUT_FILE_4 "../common/test_data/in_data/sample_out_4.dat"
-`define OUTPUT_FILE_5 "../common/test_data/in_data/sample_out_5.dat"
-`define OUTPUT_FILE_6 "../common/test_data/in_data/sample_out_6.dat"
-`define OUTPUT_FILE_7 "../common/test_data/in_data/sample_out_7.dat"
-
-// Register File
-`define REG_FILE           "./test_bench_temp/reg.txt"
-`define REG_GOLDEN_FILE    "./test_bench_temp/reg_golden.txt"
-`define REG_NUM             7               // Setting Register Number

@@ -1,4 +1,6 @@
 `include "sim_parameter.vh"
+`include "reg_define.vh"
+`include "data_define.vh"
 
 module SIM_TOP #(
     // Video Interface
