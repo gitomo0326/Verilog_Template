@@ -26,7 +26,6 @@ r = "invalid"
 g = "invalid"
 b = "invalid"
 
-
 output_file = "rgb_output.txt"
 with open(output_file, "w") as f:
 
@@ -35,35 +34,17 @@ with open(output_file, "w") as f:
 
         data_enable = find_value(de, p_clk_time)
 
-        if  data_enable == '1':
-            de_flag = 1
+        de_flag = 1 if data_enable == '1' else (0 if data_enable == '0' else de_flag)
+
+        if de_flag == 1:
             r_temp = find_value(data_r, p_clk_time)
             g_temp = find_value(data_g, p_clk_time)
             b_temp = find_value(data_b, p_clk_time)
 
-            if r_temp != "invalid":
-                r = r_temp
-            if g_temp != "invalid":
-                g = g_temp
-            if b_temp != "invalid":
-                b = b_temp
+            r = r_temp if r_temp != "invalid" else r
+            g = g_temp if g_temp != "invalid" else g
+            b = b_temp if b_temp != "invalid" else b
 
-        elif data_enable == "0":
-            de_flag = 0
-        elif data_enable == "invalid":
-            if de_flag == 1:
-                r_temp = find_value(data_r, p_clk_time)
-                g_temp = find_value(data_g, p_clk_time)
-                b_temp = find_value(data_b, p_clk_time)
-
-                if r_temp != "invalid":
-                    r = r_temp
-                if g_temp != "invalid":
-                    g = g_temp
-                if b_temp != "invalid":
-                    b = b_temp
-
-        if de_flag == 1:
             line = f"time:{p_clk_time}, de:{de_flag}, r:{hex(int(r, 2))}, g:{hex(int(g, 2))}, b:{hex(int(b, 2))}\n"
             f.write(line)
             count += 1
