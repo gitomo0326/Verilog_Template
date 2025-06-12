@@ -4,8 +4,9 @@
 
 module SIM_TOP #(
     // Video Interface
-    parameter IN_DAT_WH   = 'd8,
-    parameter OUT_DAT_WH  = 'd8,
+    parameter IN_DAT_WH    = 'd8,
+    parameter OUT_DAT_WH   = 'd8,
+    parameter PARALLEL_NUM = `PARALLEL,
 
     // Register Interface
     parameter REG_ADDR_WH = 'd12,
@@ -35,9 +36,9 @@ wire sim_sync_gen_hs;
 wire sim_sync_gen_de;
 
 // SIM_LOAD_DATA
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_r;
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_g;
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] sim_load_data_b;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] sim_load_data_r;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] sim_load_data_g;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] sim_load_data_b;
 wire sim_load_data_vs;
 wire sim_load_data_hs;
 wire sim_load_data_de;
@@ -53,9 +54,9 @@ wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_wdata;
 wire [REG_DAT_WH   -1: 0] sim_ctrl_reg_rdata;
 
 // Module
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_r;
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_g;
-wire [0: `PARALLEL - 1][OUT_DAT_WH - 1: 0] module_data_b;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] module_data_r;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] module_data_g;
+wire [0: PARALLEL_NUM - 1][OUT_DAT_WH - 1: 0] module_data_b;
 wire module_data_vs;
 wire module_data_hs;
 wire module_data_de;
@@ -157,9 +158,9 @@ SIM_SAVE_DATA #(
 // Main Module Instantiation
 VERILOG_TEMPLATE #(
     // Video Interface
-    .IN_DAT_WH  (IN_DAT_WH  ),
-    .OUT_DAT_WH (OUT_DAT_WH ),
-    .PARALLEL   (`PARALLEL  ),
+    .IN_DAT_WH  (IN_DAT_WH   ),
+    .OUT_DAT_WH (OUT_DAT_WH  ),
+    .PARALLEL   (PARALLEL_NUM),
 
     // Register Interface
     .REG_ADDR_WH(REG_ADDR_WH),
