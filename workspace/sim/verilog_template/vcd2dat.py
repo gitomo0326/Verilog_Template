@@ -22,13 +22,10 @@ class SIM_VCD:
         self.de           = self.vcd[f'SIM_TOP.m_{self.module_name}.oDE'].tv
         self.p_clk        = self.vcd['SIM_TOP.p_clk'].tv
 
-
-def find_value(tv, timestamp):
-
-    dict_tv = dict(tv)
-    value = dict_tv.get(timestamp, "invalid")
-
-    return value        
+    def find_value(self, tv, timestamp):
+        dict_tv = dict(tv)
+        value = dict_tv.get(timestamp, "invalid")
+        return value        
 
 if __name__ == "__main__":
     # Command Line Argument Parsing
@@ -59,14 +56,14 @@ if __name__ == "__main__":
         count = 0
         while p_clk_time <= vcd.p_clk[-1][0]:
 
-            data_enable = find_value(vcd.de, p_clk_time)
+            data_enable = vcd.find_value(vcd.de, p_clk_time)
 
             de_flag = 1 if data_enable == '1' else (0 if data_enable == '0' else de_flag)
 
             if de_flag == 1:
-                r_temp = find_value(vcd.data_r, p_clk_time)
-                g_temp = find_value(vcd.data_g, p_clk_time)
-                b_temp = find_value(vcd.data_b, p_clk_time)
+                r_temp = vcd.find_value(vcd.data_r, p_clk_time)
+                g_temp = vcd.find_value(vcd.data_g, p_clk_time)
+                b_temp = vcd.find_value(vcd.data_b, p_clk_time)
 
                 r = r_temp if r_temp != "invalid" else r
                 g = g_temp if g_temp != "invalid" else g
