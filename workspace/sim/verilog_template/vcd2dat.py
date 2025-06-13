@@ -84,6 +84,8 @@ if __name__ == "__main__":
 
             line = f"time:{p_clk_time}, de:{de_flag}, r:{hex(int(r, 2))}, g:{hex(int(g, 2))}, b:{hex(int(b, 2))}\n"
             out_frame_file.write(line)
+
         p_clk_time += p_clk_term
 
+    # Close the last frame file
     out_frame_file.close()
